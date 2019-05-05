@@ -31,7 +31,7 @@ pipeline {
         stage('Build ace-sample') {
             agent any
             steps {
-                sh 'docker build docker build -t aceapp --file Dockerfile.aceonly .'
+                sh 'docker build -t aceapp --file Dockerfile.aceonly .'
             }
         }
         stage('Run ace-sample') {

@@ -38,12 +38,15 @@ pipeline {
             agent any
             steps {
                 sh 'sleep 5'
+                sh 'ip_addr=$(
                 sh 'curl localhost:7600'
+            }
+            options {
+                retry(5)
             }
             post {
                 failure {
-                    sh 'docker container stop ace-docker-demo'
-                    sh 'docker container rm ace-docker-demo'
+                    sh 'docker container rm ace-docker-demo --force'
                 }
             }
         }

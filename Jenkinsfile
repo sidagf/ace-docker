@@ -28,7 +28,7 @@ pipeline {
         stage('Run ace-docker') {
             agent any
             steps {
-                sh 'docker run --name aceserver -p 7600:7600 -p 7800:7800 -p 7843:7843 --env LICENSE=accept --env ACE_SERVER_NAME=ACESERVER ace-dev-only:latest'
+                sh 'docker run -d --name ace-docker-demo -p 7600:7600 -p 7800:7800 -p 7843:7843 --env LICENSE=accept --env ACE_SERVER_NAME='ACESERVER' ace-dev-only:latest'
             }
         }
         stage('Test ace-docker') {

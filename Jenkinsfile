@@ -34,6 +34,7 @@ pipeline {
         stage('Test ace-docker') {
             agent any
             steps {
+                sh 'sleep 5'
                 sh 'curl localhost:7600'
             }
         }

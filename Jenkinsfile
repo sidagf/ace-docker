@@ -3,6 +3,7 @@ pipeline {
     environment {
         ACE_INSTALL     =   '11.0.0.4-ACE-LINUX64-DEVELOP.tar.gz'
         ACE_LOCATION    =   '/home/jenkins/downloads/'
+        CONTAINER_HASH  = ''
     }
     stages {
         stage('Check that ACE is available') {
@@ -28,8 +29,8 @@ pipeline {
         stage('Run ace-docker') {
             agent any
             steps {
-                sh 'docker run -d --name ace-docker-demo -p 7600:7600 -p 7800:7800 -p 7843:7843 --env LICENSE=accept --env ACE_SERVER_NAME=ACESERVER ace-dev-only:latest'
-            }
+                sh '$CONTAINER_HASH=$(docker run -d --name ace-docker-demo -p 7600:7600 -p 7800:7800 -p 7843:7843 --env LICENSE=accept --env ACE_SERVER_NAME=ACESERVER ace-dev-only:latest')
+                sh 'echo $CONTAINER_HASH'
         }
         stage('Test ace-docker') {
             agent any

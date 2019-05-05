@@ -38,6 +38,11 @@ pipeline {
                 sh 'sleep 5'
                 sh 'curl localhost:7600'
             }
+            post {
+                failure {
+                    sh 'docker container stop $CONTAINER_HASH && docker container rm $CONTAINER_HASH'   
+                }
+            }
         }
     }
 }

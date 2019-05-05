@@ -28,24 +28,20 @@ pipeline {
                 retry(3)
             }
         }
-        stage('Run ace-docker') {
+        stage('Build ace-sample') {
             agent any
             steps {
-                sh 'docker run -d --name ace-docker-demo -p 7600:7600 -p 7800:7800 -p 7843:7843 --env LICENSE=accept --env ACE_SERVER_NAME=ACESERVER ace-dev-only:latest'
+                sh 'docker build docker build -t aceapp --file Dockerfile.aceonly .'
             }
         }
-        stage('Test ace-docker') {
+        stage('Run ace-sample') {
             agent any
             steps {
-                sh 'sleep 5'
-                sh 'curl localhost:7600'
-            }
-            options {
-                retry(5)
+                sh 'docker run --name aceapp -p 7600:7600 -p 7800:7800 -p 7843:7843 --env LICENSE=accept --env ACE_SERVER_NAME=ACESERVER --mount type=bind,src=$WORKSPACE$JOBNAME/sample/initial-config,dst=/home/aceuser/initial-config --env ACE_TRUSTSTORE_PASSWORD=truststorepwd --env ACE_KEYSTORE_PASSWORD=keystorepwd aceapp:latest'
             }
             post {
                 failure {
-                    sh 'docker container rm ace-docker-demo --force'
+                    sh 'docker container rm aceapp --force'
                 }
             }
         }

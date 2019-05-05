@@ -2,7 +2,7 @@ pipeline {
     agent none
     environment {
         ACE_INSTALL     =   '11.0.0.4-ACE-LINUX64-DEVELOP.tar.gz'
-        ACE_LOCATION    =   '/home/jenkins/downloads'
+        ACE_LOCATION    =   '/home/jenkins/downloads/'
     }
     stages {
         stage('Check that ACE is available') {

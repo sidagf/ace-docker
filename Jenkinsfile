@@ -38,7 +38,6 @@ pipeline {
             agent any
             steps {
                 sh 'sleep 5'
-                sh 'ip_addr=$(
                 sh 'curl localhost:7600'
             }
             options {

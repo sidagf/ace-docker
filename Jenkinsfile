@@ -1,7 +1,7 @@
 pipeline {
     agent none
     parameters {
-           IP_ADDR  =   '127.0.0.1'
+           string(name: 'IP_ADDR', defaultValue: '127.0.0.1', description: 'IP of the server this is deployed at.')
     }
     environment {
         ACE_INSTALL     =   '11.0.0.4-ACE-LINUX64-DEVELOP.tar.gz'

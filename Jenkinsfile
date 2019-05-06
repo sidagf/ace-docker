@@ -1,5 +1,8 @@
 pipeline {
     agent none
+    parameters {
+           IP_ADDR  =   '127.0.0.1'
+    }
     environment {
         ACE_INSTALL     =   '11.0.0.4-ACE-LINUX64-DEVELOP.tar.gz'
         ACE_LOCATION    =   '/home/jenkins/downloads/'
@@ -38,8 +41,8 @@ pipeline {
         stage('Test ace-docker') {
             agent any
             steps {
-                sleep(30)
-                sh 'curl $(ip -f inet addr show eth0 | grep -Po "inet \K[\d.]+"):7600'
+                sleep(3)
+                sh "curl ${params.IP_ADDR}:7600"
             }
             options {
                 retry(10)

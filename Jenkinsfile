@@ -6,7 +6,6 @@ pipeline {
     environment {
         ACE_INSTALL     =   '11.0.0.4-ACE-LINUX64-DEVELOP.tar.gz'
         ACE_LOCATION    =   '/home/jenkins/downloads/'
-        INTERFACE       = 'eth0'
     }
     stages {
         stage('Check that ACE is available') {
@@ -29,13 +28,19 @@ pipeline {
                 sh 'docker build -t ace-dev-only --build-arg ACE_INSTALL=$ACE_INSTALL --file ubuntu/Dockerfile.aceonly .'
             }
             options {
-                retry(5)
+                retry(10)
+            }
+        }
+        stage('Remove all containers based on our image') {
+            agent any
+            steps {
+                sh 'docker container rm -f $(docker container ps -a -q --filter=ancestor=ace-dev-only)'   
             }
         }
         stage('Run ace-docker') {
             agent any
             steps {
-                sh 'docker run -d --name ace-docker-demo-$BUILD_NUMBER -p 7600:7600 -p 7800:7800 -p 7843:7843 --env LICENSE=accept --env ACE_SERVER_NAME=ACESERVER ace-dev-only:latest'
+                sh 'docker run -d --name ace-docker-demo -p 7600:7600 -p 7800:7800 -p 7843:7843 --env LICENSE=accept --env ACE_SERVER_NAME=ACESERVER ace-dev-only:latest'
             }
         }
         stage('Test ace-docker') {

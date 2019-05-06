@@ -37,16 +37,11 @@ pipeline {
         stage('Test ace-docker') {
             agent any
             steps {
-                sh 'sleep 5'
                 sh 'curl localhost:7600'
+                sh 'sleep 20'
             }
             options {
                 retry(5)
-            }
-            post {
-                failure {
-                    sh 'docker container rm ace-docker-demo --force'
-                }
             }
         }
     }

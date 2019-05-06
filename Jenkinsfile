@@ -39,7 +39,7 @@ pipeline {
             agent any
             steps {
                 sleep(30)
-                sh 'curl $(ip -f inet addr show eth0 | grep -Po 'inet \K[\d.]+'):7600'
+                sh 'curl $(ip -f inet addr show eth0 | grep -Po "inet \K[\d.]+"):7600'
             }
             options {
                 retry(10)

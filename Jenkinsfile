@@ -32,6 +32,12 @@ pipeline {
                 retry(5)
             }
         }
+        stage('Clear existing docker containers') {
+            agent any
+            steps {
+                sh 'docker container prune -f' // All containers are removed in this step, ensuring a clean run
+            }
+        }
         stage('Run ace-docker') {
             agent any
             steps {

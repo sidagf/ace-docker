@@ -25,7 +25,7 @@ pipeline {
                 sh 'docker build -t ace-dev-only --build-arg ACE_INSTALL=$ACE_INSTALL --file ubuntu/Dockerfile.aceonly .'
             }
             options {
-                retry(3)
+                retry(5)
             }
         }
         stage('Run ace-docker') {

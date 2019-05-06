@@ -34,7 +34,7 @@ pipeline {
         stage('Remove all containers based on our image') {
             agent any
             steps {
-                sh 'docker container rm -f $(docker container ps -a -q --filter=ancestor=ace-dev-only)'   
+                sh "docker container rm -f $(docker container ps -a -q --filter=ancestor=ace-dev-only)"  
             }
         }
         stage('Run ace-docker') {

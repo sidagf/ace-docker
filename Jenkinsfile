@@ -35,6 +35,12 @@ pipeline {
                 sh 'docker build -t aceapp --file sample/Dockerfile.aceonly .'
             }
         }
+        stage('Remove all containers based on our image') {
+            agent any
+            steps {
+                sh 'docker container rm -f \$(docker container ps -a -q --filter=ancestor=aceapp) || true'
+            }
+        }
         stage('Run ace-sample') {
             agent any
             steps {

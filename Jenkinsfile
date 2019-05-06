@@ -39,6 +39,7 @@ pipeline {
             agent any
             steps {
                 sh 'docker container rm -f \$(docker container ps -a -q --filter=ancestor=aceapp) || true'
+                sh 'docker container rm -f \$(docker container ps -a -q --filter=ancestor=ace-dev-only) || true'
             }
         }
         stage('Run ace-sample') {
